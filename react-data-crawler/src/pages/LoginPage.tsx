@@ -67,7 +67,7 @@ function LoginPage() {
   const onGoogleLoginClick = (e: React.FormEvent) => {
     e.preventDefault();
 
-    window.location.href = `${BASE_URL}/Authentication/`;
+    window.location.href = `${BASE_URL}/Authentication/GoogleSignInStart`;
   };
 
   return (

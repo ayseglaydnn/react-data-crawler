@@ -12,6 +12,7 @@ import { AppUserContext } from './context/StateContext.tsx'
 import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import MainPage from './pages/MainPage.tsx'
+import SocialLogin from './pages/SocialLogin.tsx'
 
 
 function App() {
@@ -75,7 +76,7 @@ function App() {
                     </ProtectedRoute>
                 }/>
                 <Route path="/login" element={<LoginPage/>}/>
-                {/* <Route path="/social-login" element={<SocialLogin/>}/> */}
+                <Route path="/social-login" element={<SocialLogin/>}/>
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
         </Container>
