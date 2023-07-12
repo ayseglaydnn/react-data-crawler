@@ -1,0 +1,19 @@
+import React, { useContext } from "react";
+import { AppUserContext } from "../context/StateContext";
+import { Navigate } from "react-router-dom";
+
+type ProtectedRouteProps ={
+    children:React.ReactElement
+}
+
+function ProtectedRoute({children}:ProtectedRouteProps){
+
+    const {appUser} = useContext(AppUserContext);
+
+    if(!appUser)
+        return <Navigate to= "/login" />
+
+    return children;
+}
+
+export default ProtectedRoute;
