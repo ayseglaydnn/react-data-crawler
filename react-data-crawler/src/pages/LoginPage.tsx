@@ -55,7 +55,7 @@ function LoginPage() {
           expires,
         };
 
-        localStorage.setItem("upstorage_user", JSON.stringify(localJwt));
+        localStorage.setItem("localUser", JSON.stringify(localJwt));
         navigate("/");
       } else {
         toast.error(response.statusText);

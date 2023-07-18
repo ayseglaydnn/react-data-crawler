@@ -13,6 +13,10 @@ import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import MainPage from './pages/MainPage.tsx'
 import SocialLogin from './pages/SocialLogin.tsx'
+import OrderAddPage from './pages/OrderAddPage.tsx'
+import ProductPage from './pages/ProductPage.tsx'
+import OrderEventPage from './pages/OrderEventPage.tsx'
+import OrderPage from './pages/OrdersPage.tsx'
 
 
 function App() {
@@ -23,7 +27,7 @@ function App() {
 
   useEffect(() => {
 
-      const jwtJson = localStorage.getItem("upstorage_user");
+      const jwtJson = localStorage.getItem("localUser");
 
       if (!jwtJson) {
           navigate("/login");
@@ -50,37 +54,47 @@ function App() {
 
   return (
     <>
-    <AppUserContext.Provider value={{appUser, setAppUser}}>
-        <ToastContainer/>
-        <NavBar />
-        <Container className="App">
-            <Routes>
-                <Route path="/" element={
-                    <ProtectedRoute>
-                        <MainPage/>
-                    </ProtectedRoute>
-                }/>
-                {/* <Route path="/accounts" element={
-                    <ProtectedRoute>
-                        <AccountsPage />
-                    </ProtectedRoute>
-                }/>
-                <Route path="/accounts/add" element={
-                    <ProtectedRoute>
-                        <AccountsAddPage />
-                    </ProtectedRoute>
-                }/> */}
-                <Route path="/settings" element={
-                    <ProtectedRoute>
-                        <SettingsPage />
-                    </ProtectedRoute>
-                }/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/social-login" element={<SocialLogin/>}/>
-                <Route path="*" element={<NotFoundPage/>}/>
-            </Routes>
-        </Container>
-    </AppUserContext.Provider>
+        <AppUserContext.Provider value={{appUser, setAppUser}}>
+            <ToastContainer/>
+            <NavBar />
+            <Container className="App">
+                <Routes>
+                    <Route path="/" element={
+                        <ProtectedRoute>
+                            <MainPage/>
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/orders" element={
+                        <ProtectedRoute>
+                            <OrderPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/orders/add" element={
+                        <ProtectedRoute>
+                            <OrderAddPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/settings" element={
+                        <ProtectedRoute>
+                            <SettingsPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/products/:orderId" element={
+                        <ProtectedRoute>
+                            <ProductPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/orderEvents/:orderId" element={
+                        <ProtectedRoute>
+                            <OrderEventPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/social-login" element={<SocialLogin/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                </Routes>
+            </Container>
+        </AppUserContext.Provider>
     </>
   )
 }
