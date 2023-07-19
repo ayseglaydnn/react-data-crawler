@@ -17,6 +17,7 @@ import OrderAddPage from './pages/OrderAddPage.tsx'
 import ProductPage from './pages/ProductPage.tsx'
 import OrderEventPage from './pages/OrderEventPage.tsx'
 import OrderPage from './pages/OrdersPage.tsx'
+import CrawlerLivePage from './pages/CrawlerLivePage.tsx'
 
 
 function App() {
@@ -87,6 +88,11 @@ function App() {
                     <Route path="/orderEvents/:orderId" element={
                         <ProtectedRoute>
                             <OrderEventPage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/crawlerLive" element={
+                        <ProtectedRoute>
+                            <CrawlerLivePage />
                         </ProtectedRoute>
                     }/>
                     <Route path="/login" element={<LoginPage/>}/>

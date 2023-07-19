@@ -30,6 +30,7 @@ const NavBar = ( {} ) => {
                 <Menu.Item as={NavLink} to="/settings">Settings</Menu.Item>
                 <Menu.Item as={NavLink} to="/orders">Orders</Menu.Item>
                 <Menu.Item as={NavLink} to="/orders/add">Add Order</Menu.Item>
+                <Menu.Item as={NavLink} to="/crawlerLive">Crawler Live</Menu.Item>
                 <Menu.Item as={NavLink} to="/notfound">Not Found</Menu.Item>
                 {!appUser && <Menu.Item as={NavLink} to="/login" position="right"><Icon name="sign-in"/>Login</Menu.Item>}
                 {appUser && <Menu.Item as={Button} onClick={handleLogout} position="right"><Icon name="sign-out"/>Logout</Menu.Item>}
