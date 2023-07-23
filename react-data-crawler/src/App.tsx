@@ -18,13 +18,21 @@ import ProductPage from './pages/ProductPage.tsx'
 import OrderEventPage from './pages/OrderEventPage.tsx'
 import OrderPage from './pages/OrdersPage.tsx'
 import CrawlerLivePage from './pages/CrawlerLivePage.tsx'
+import NotificationPage from './pages/NotificationPage.tsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from './store/store.ts'
+import { HubConnectionBuilder } from '@microsoft/signalr'
+import { addNotification } from './store/features/notification/notificationSlice.ts'
 
+const VITE_SIGNALR_URL = import.meta.env.VITE_SIGNALR_URL;
 
 function App() {
 
   const navigate = useNavigate();
 
   const [appUser, setAppUser] = useState<LocalUser | undefined>(undefined);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
@@ -50,8 +58,24 @@ function App() {
           accessToken: localJwt.accessToken
       });
 
+      
 
-  }, []);
+    const hubConnection = new HubConnectionBuilder()
+    .withUrl(`${VITE_SIGNALR_URL}/Hubs/NotificationHub`)
+    .withAutomaticReconnect()
+    .build();
+
+    hubConnection.on('AppNotificationSended', (notification) => {
+    dispatch(addNotification(notification));
+    });
+
+    hubConnection.start();
+
+    return () => {
+    hubConnection.stop();
+    };
+
+  }, [dispatch]);
 
   return (
     <>
@@ -93,6 +117,11 @@ function App() {
                     <Route path="/crawlerLive" element={
                         <ProtectedRoute>
                             <CrawlerLivePage />
+                        </ProtectedRoute>
+                    }/>
+                    <Route path="/notificationPage" element={
+                        <ProtectedRoute>
+                            <NotificationPage />
                         </ProtectedRoute>
                     }/>
                     <Route path="/login" element={<LoginPage/>}/>

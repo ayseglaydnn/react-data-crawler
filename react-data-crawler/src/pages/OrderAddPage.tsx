@@ -4,6 +4,11 @@ import api from "../utils/axiosInstance.ts";
 import { ApiResponse } from "../types/GenericTypes.ts";
 import { Link } from 'react-router-dom';
 import { OrderAddCommand } from "../types/OrderTypes";
+//import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+//import { LocalJwt } from "../types/AuthTypes.ts";
+import { useNavigate } from "react-router-dom";
+
+// const VITE_SIGNALR_URL = import.meta.env.VITE_SIGNALR_URL;
 
 const OrderAddPage = () => {
   const saleOptions = [
@@ -11,12 +16,42 @@ const OrderAddPage = () => {
     { key: 'od', text: 'OnDiscount', value: '1' },
     { key: 'nd', text: 'NonDiscount', value: '2' }
   ];
+  const navigate = useNavigate();
+
+  // const [orderHubConnection,setOrderHubConnection] =useState<HubConnection | undefined>(undefined);
+
+  // useEffect(()=>{
+  //   const startConnection = async () => {
+
+  //     const jwtJson = localStorage.getItem("localUser");
+      
+  //     if(jwtJson){
+  //       const localJwt:LocalJwt =JSON.parse(jwtJson);
+
+  //       console.log(localJwt.accessToken);
+      
+  //       const connection = new HubConnectionBuilder()
+  //       .withUrl(`${VITE_SIGNALR_URL}/Hubs/OrderHub?access_token=${localJwt.accessToken}`)
+  //       .withAutomaticReconnect()
+  //       .build();
+
+  //       await connection.start();
+
+  //       setOrderHubConnection(connection);
+  //     }
+  //   }
+
+  //   if(!orderHubConnection){
+  //     startConnection();
+  //   }
+
+  // },[])
 
   const [order, setOrder] = useState<OrderAddCommand>({
     requestedAmount: 0,
     productCrawlType: 0,
-    email: '',
-    name: '',
+    email: "ays.ayd@gmail.com",
+    name: "ays",
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -25,12 +60,23 @@ const OrderAddPage = () => {
   });
 
   const handleSubmit = async () => {
+
+    // const orderId = await orderHubConnection?.invoke<string>("AddNewOrder", order)
+    //   .then((result) => {
+    //     console.log('AddNewOrder metodundan dönen sonuç:', result);
+    //   })
+    //   .catch((error) => {
+    //     console.error('AddNewOrder metodunda hata oluştu:', error);
+    //   });
+
     if (validateForm()) {
       const response = await api.post<ApiResponse<string>>("/Orders", order);
+      navigate('/crawlerLive');
       if (response.data) {
         console.log(`Order with ID: ${response.data.data} added successfully.`);
-        // You can redirect to accounts page or show success message here.
+        
       }
+      
     }
   }
 
@@ -69,6 +115,8 @@ const OrderAddPage = () => {
     setFormErrors(errors);
     return isValid;
   }
+
+  
 
   return (
     <div>

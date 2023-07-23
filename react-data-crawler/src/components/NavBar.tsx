@@ -2,6 +2,7 @@ import {Container, Menu, Image, Button, Icon} from "semantic-ui-react";
 import {NavLink, useNavigate} from "react-router-dom";
 import { useContext } from "react";
 import { AppUserContext } from "../context/StateContext";
+import NotificationButton from "./NotificationButton";
 
 const NavBar = ( {} ) => {
 
@@ -32,8 +33,10 @@ const NavBar = ( {} ) => {
                 <Menu.Item as={NavLink} to="/orders/add">Add Order</Menu.Item>
                 <Menu.Item as={NavLink} to="/crawlerLive">Crawler Live</Menu.Item>
                 <Menu.Item as={NavLink} to="/notfound">Not Found</Menu.Item>
+                <Menu.Item><NotificationButton /></Menu.Item>
                 {!appUser && <Menu.Item as={NavLink} to="/login" position="right"><Icon name="sign-in"/>Login</Menu.Item>}
                 {appUser && <Menu.Item as={Button} onClick={handleLogout} position="right"><Icon name="sign-out"/>Logout</Menu.Item>}
+                
             </Container>
         </Menu>
     );
